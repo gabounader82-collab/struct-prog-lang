@@ -5,25 +5,44 @@ import copy
 import errors
 
 def matrix_mult(matrix_left, matrix_right):
+    #Takes in the numbers of rows and columns of matrix left.
     m = len(matrix_left)
     n = len(matrix_left[0])
+
+    #Takes in the number of rows and columns of matrix right.
     m2 = len(matrix_right)
     n2 = len(matrix_right[0])
 
+    #Makes sure each row in matrix left has the same length.
     for left_row in matrix_left:
         assert(len(left_row) == n)
 
+    #Makes sure each row in matrix right has the same length.
     for right_row in matrix_right:
         assert(len(right_row) == n2)
-
+ 
+    #Makes sure the number of columns in matrix left and the number of rows in matrix right are equal
+    #in order to do matrix mult.
     assert(n == m2), f"The first matrix's column size, and the second matrix's row size should be equal."
 
+    #This variable takes in the result of the matrix mult.
     result = []
 
+    #Makes result into a mxn2 matrix.
     for i in range(0, m):
-        for j in range(0, n)
+        result.append([])
+        for j in range(0, n2):
+            result[i].append(0)
 
+    #First for loop makes it possible to look at the rows.
+    for i in range(0, m):
+        #Second for loop makes it possible to look at the column.
+        for j in range(0, n2):
+            #This loop actually does the mult for result at the index of ixj.
+            for k in range(0, n):
+                result[i][j] += matrix_left[i][k] * matrix_right[k][j]
 
+    return result
 
 
 def type_of(*args):
@@ -326,8 +345,8 @@ def evaluate(ast, environment):
             return left_value * int(right_value), None
         if types == "number-string":
             return int(left_value) * right_value, None  # Corrected order
-        if types == "array-array"
-            return martix_mult(left_value, right_value)
+        if types == "array-array":
+            return matrix_mult(left_value, right_value), None
         raise Exception(f"Illegal types for {ast['tag']}:{types}")
 
     if ast["tag"] == "/":
@@ -753,6 +772,13 @@ def equals(code, environment, expected_result, expected_environment=None):
         -- got --
         {[(environment)]}."""
 
+def test_matrix_mult():
+    print("test matrix mult")
+    environment = {}
+    code = "[[2, 1], [4, 3]]  * [[5, 4], [3, 2]]"
+    ast = parse(tokenize(code))
+    result, _ = evaluate(ast, environment)
+    result = [[13, 10], [29, 22]]
 
 def test_evaluate_single_value():
     print("test evaluate single value")
@@ -1280,4 +1306,5 @@ if __name__ == "__main__":
     test_scoping()
     test_closures()
     test_control_flow_scoping_rules()
+    test_matrix_mult()
     print("done.")
