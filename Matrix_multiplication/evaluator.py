@@ -778,7 +778,21 @@ def test_matrix_mult():
     code = "[[2, 1], [4, 3]]  * [[5, 4], [3, 2]]"
     ast = parse(tokenize(code))
     result, _ = evaluate(ast, environment)
-    result = [[13, 10], [29, 22]]
+    assert(result == [[13, 10], [29, 22]])
+
+    environment = {}
+    code = "[[2, 1], [4, 3]]  * [[2, 5, 5, 6, 6], [2, 6, 7, 8, 8]]"
+    ast = parse(tokenize(code))
+    result, _ = evaluate(ast, environment)
+    assert(result == [[6, 16, 17, 20, 20], [14, 38, 41, 48, 48]])
+
+    environment = {}
+    code = "[[2, 1], [4, 3]]  * [[2, 5, 5, 6, 6], [2, 6, 7, 8, 8]] * [[3, 2], [5, 2], [4, 1], [3, 1], [2, 1]]"
+    ast = parse(tokenize(code))
+    result, _ = evaluate(ast, environment)
+    assert(result == [[266, 101], [636, 241]])
+
+
 
 def test_evaluate_single_value():
     print("test evaluate single value")
