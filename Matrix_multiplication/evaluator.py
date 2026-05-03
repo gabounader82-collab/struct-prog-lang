@@ -15,11 +15,11 @@ def matrix_mult(matrix_left, matrix_right):
 
     #Makes sure each row in matrix left has the same length.
     for left_row in matrix_left:
-        assert(len(left_row) == n)
+        assert(len(left_row) == n), f"Every row needs to be the same length."
 
     #Makes sure each row in matrix right has the same length.
     for right_row in matrix_right:
-        assert(len(right_row) == n2)
+        assert(len(right_row) == n2), f"Every row needs to be the same length."
  
     #Makes sure the number of columns in matrix left and the number of rows in matrix right are equal
     #in order to do matrix mult.
@@ -33,6 +33,15 @@ def matrix_mult(matrix_left, matrix_right):
         result.append([])
         for j in range(0, n2):
             result[i].append(0)
+
+    #These two for loops make sure the matrixs is either a int or a float
+    for i in range(0, m):
+        for j in range(0, n):
+            assert(isinstance(matrix_left[i][j], (int, float))), f"Matrix on the left needs to be int or float values."
+    
+    for i in range(0, m2):
+        for j in range(0, n2):
+            assert(isinstance(matrix_right[i][j], (int, float))), f"Matrix on the right needs to be int or float value.s"
 
     #First for loop makes it possible to look at the rows.
     for i in range(0, m):
