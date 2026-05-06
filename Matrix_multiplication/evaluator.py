@@ -801,6 +801,12 @@ def test_matrix_mult():
     result, _ = evaluate(ast, environment)
     assert(result == [[266, 101], [636, 241]])
 
+    code = " x = [[2, 1], [4, 3]];  y = [[5, 4], [3, 2]]; x*y"
+    ast = parse(tokenize(code))
+    result, _ = evaluate(ast, environment)
+    assert(result == [[13, 10], [29, 22]])
+
+
 
 
 def test_evaluate_single_value():
